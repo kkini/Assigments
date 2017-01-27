@@ -1,0 +1,210 @@
+mysql> create databse corruption;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'databse corruption' at line 1
+mysql> create database corruption;
+Query OK, 1 row affected (0.19 sec)
+
+mysql> use corruption;
+Database changed
+mysql> create table states(state_id int primary key  not null auto_increment,state_name varchar(30) not null );
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> desc state;
+ERROR 1146 (42S02): Table 'corruption.state' doesn't exist
+mysql> desc states;
++------------+-------------+------+-----+---------+----------------+
+| Field      | Type        | Null | Key | Default | Extra          |
++------------+-------------+------+-----+---------+----------------+
+| state_id   | int(11)     | NO   | PRI | NULL    | auto_increment |
+| state_name | varchar(30) | NO   |     | NULL    |                |
++------------+-------------+------+-----+---------+----------------+
+2 rows in set (0.02 sec)
+
+mysql> create table departments(department_id int primary key  not null auto_increment,department_name varchar(30) not null );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc departments;
++-----------------+-------------+------+-----+---------+----------------+
+| Field           | Type        | Null | Key | Default | Extra          |
++-----------------+-------------+------+-----+---------+----------------+
+| department_id   | int(11)     | NO   | PRI | NULL    | auto_increment |
+| department_name | varchar(30) | NO   |     | NULL    |                |
++-----------------+-------------+------+-----+---------+----------------+
+2 rows in set (0.01 sec)
+
+mysql> create table corruption_story(corruption_id int primary key not null auto_increment,country varchar(30),state_id int,city varchar(30),age int,department_id int,bribe_taker varchar(30),bribe_rs double,experience varchar(100),foreign key (state_id) references states(stat_id),foreign key (department_id) references departments(department_id));
+ERROR 1005 (HY000): Can't create table 'corruption.corruption_story' (errno: 150)
+mysql> create table corruption_story(corruption_id int primary key not null auto_increment,country varchar(30),state_id int,city varchar(30),age int,department_id int,bribe_taker varchar(30),bribe_rs double,experience varchar(100),foreign key (state_id) references states(state_id),foreign key (department_id) references departments(department_id));
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> desc corruption_story;
++---------------+--------------+------+-----+---------+----------------+
+| Field         | Type         | Null | Key | Default | Extra          |
++---------------+--------------+------+-----+---------+----------------+
+| corruption_id | int(11)      | NO   | PRI | NULL    | auto_increment |
+| country       | varchar(30)  | YES  |     | NULL    |                |
+| state_id      | int(11)      | YES  | MUL | NULL    |                |
+| city          | varchar(30)  | YES  |     | NULL    |                |
+| age           | int(11)      | YES  |     | NULL    |                |
+| department_id | int(11)      | YES  | MUL | NULL    |                |
+| bribe_taker   | varchar(30)  | YES  |     | NULL    |                |
+| bribe_rs      | double       | YES  |     | NULL    |                |
+| experience    | varchar(100) | YES  |     | NULL    |                |
++---------------+--------------+------+-----+---------+----------------+
+9 rows in set (0.01 sec)
+
+mysql> drop table corruption_story;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> create table corruption_story(corruption_id int primary key not null auto_increment,country varchar(30),state_id int,city varchar(30),age int,department_id int,bribe_taker varchar(30),bribe_rs double,experience varchar(100),corruption_date date,foreign key (state_id) references states(state_id),foreign key (department_id) references departments(department_id));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc corruption_story;
++-----------------+--------------+------+-----+---------+----------------+
+| Field           | Type         | Null | Key | Default | Extra          |
++-----------------+--------------+------+-----+---------+----------------+
+| corruption_id   | int(11)      | NO   | PRI | NULL    | auto_increment |
+| country         | varchar(30)  | YES  |     | NULL    |                |
+| state_id        | int(11)      | YES  | MUL | NULL    |                |
+| city            | varchar(30)  | YES  |     | NULL    |                |
+| age             | int(11)      | YES  |     | NULL    |                |
+| department_id   | int(11)      | YES  | MUL | NULL    |                |
+| bribe_taker     | varchar(30)  | YES  |     | NULL    |                |
+| bribe_rs        | double       | YES  |     | NULL    |                |
+| experience      | varchar(100) | YES  |     | NULL    |                |
+| corruption_date | date         | YES  |     | NULL    |                |
++-----------------+--------------+------+-----+---------+----------------+
+10 rows in set (0.02 sec)
+
+mysql> drop table corruption_story;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> create table corruption_story(corruption_id int primary key not null auto_increment,country varchar(30),state_id int,city varchar(30),age int,department_id int,bribe_taker varchar(30),bribe_rs double,experience varchar(100),corruption_date timestamp,foreign key (state_id) references states(state_id),foreign key (department_id) references departments(department_id));
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> desc corruption_story;
++-----------------+--------------+------+-----+-------------------+-----------------------------+
+| Field           | Type         | Null | Key | Default           | Extra                       |
++-----------------+--------------+------+-----+-------------------+-----------------------------+
+| corruption_id   | int(11)      | NO   | PRI | NULL              | auto_increment              |
+| country         | varchar(30)  | YES  |     | NULL              |                             |
+| state_id        | int(11)      | YES  | MUL | NULL              |                             |
+| city            | varchar(30)  | YES  |     | NULL              |                             |
+| age             | int(11)      | YES  |     | NULL              |                             |
+| department_id   | int(11)      | YES  | MUL | NULL              |                             |
+| bribe_taker     | varchar(30)  | YES  |     | NULL              |                             |
+| bribe_rs        | double       | YES  |     | NULL              |                             |
+| experience      | varchar(100) | YES  |     | NULL              |                             |
+| corruption_date | timestamp    | NO   |     | CURRENT_TIMESTAMP | on update CURRENT_TIMESTAMP |
++-----------------+--------------+------+-----+-------------------+-----------------------------+
+10 rows in set (0.02 sec)
+
+mysql> insert into states values(1,"karnataka");
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into states values(2,"AP");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into states values(3,"MP");
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into states values(4,"HP");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from states;
++----------+------------+
+| state_id | state_name |
++----------+------------+
+|        1 | karnataka  |
+|        2 | AP         |
+|        3 | MP         |
+|        4 | HP         |
++----------+------------+
+4 rows in set (0.00 sec)
+
+mysql> insert into departments values(1,"Legal");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into departments values(2,"Traffic");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into departments values(3,"Jail");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into departments values(4,"RTO");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from departments;
++---------------+-----------------+
+| department_id | department_name |
++---------------+-----------------+
+|             1 | Legal           |
+|             2 | Traffic         |
+|             3 | Jail            |
+|             4 | RTO             |
++---------------+-----------------+
+4 rows in set (0.00 sec)
+
+mysql> drop table corruption_story;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> create table corruption_story(corruption_id int primary key not null auto_increment,country varchar(30),state_id int,city varchar(30),age int,department_id int,bribe_taker varchar(30),bribe_rs double,experience varchar(100),corruption_date date,foreign key (state_id) references states(state_id),foreign key (department_id) references departments(department_id));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc corruption_story;
++-----------------+--------------+------+-----+---------+----------------+
+| Field           | Type         | Null | Key | Default | Extra          |
++-----------------+--------------+------+-----+---------+----------------+
+| corruption_id   | int(11)      | NO   | PRI | NULL    | auto_increment |
+| country         | varchar(30)  | YES  |     | NULL    |                |
+| state_id        | int(11)      | YES  | MUL | NULL    |                |
+| city            | varchar(30)  | YES  |     | NULL    |                |
+| age             | int(11)      | YES  |     | NULL    |                |
+| department_id   | int(11)      | YES  | MUL | NULL    |                |
+| bribe_taker     | varchar(30)  | YES  |     | NULL    |                |
+| bribe_rs        | double       | YES  |     | NULL    |                |
+| experience      | varchar(100) | YES  |     | NULL    |                |
+| corruption_date | date         | YES  |     | NULL    |                |
++-----------------+--------------+------+-----+---------+----------------+
+10 rows in set (0.02 sec)
+
+mysql> select * from corruption_story;
++---------------+---------+----------+---------+------+---------------+-------------+----------+------------+-----------------+
+| corruption_id | country | state_id | city    | age  | department_id | bribe_taker | bribe_rs | experience | corruption_date |
++---------------+---------+----------+---------+------+---------------+-------------+----------+------------+-----------------+
+|             1 | India   |        2 | karkala |   21 |             4 | police      |     1000 | bad        | 2011-12-07      |
++---------------+---------+----------+---------+------+---------------+-------------+----------+------------+-----------------+
+1 row in set (0.00 sec)
+
+mysql> select cs.corruption_date,d.department_name,cs.bribe_taker,cs.bribe_rs,cs.experience from departments d,states s,corruption_story where d.department_id=cs.department_id and s.state_id=cs.state_id and s.state="karnataka" order by date desc;
+ERROR 1054 (42S22): Unknown column 'cs.corruption_date' in 'field list'
+mysql> select cs.corruption_date,d.department_name,cs.bribe_taker,cs.bribe_rs,cs.experience from departments d,states s,corruption_story cs where d.department_id=cs.department_id and s.state_id=cs.state_id and s.state="karnataka" order by date desc;
+ERROR 1054 (42S22): Unknown column 's.state' in 'where clause'
+mysql> select cs.corruption_date,d.department_name,cs.bribe_taker,cs.bribe_rs,cs.experience from departments d,states s,corruption_story cs where d.department_id=cs.department_id and s.state_id=cs.state_id and s.state_name="karnataka" order by date desc;
+ERROR 1054 (42S22): Unknown column 'date' in 'order clause'
+mysql> select cs.corruption_date,d.department_name,cs.bribe_taker,cs.bribe_rs,cs.experience from departments d,states s,corruption_story cs where d.department_id=cs.department_id and s.state_id=cs.state_id and s.state_name="karnataka" order by cs.corruption_date desc;
+Empty set (0.00 sec)
+
+mysql> select cs.corruption_date,d.department_name,cs.bribe_taker,cs.bribe_rs,cs.experience from departments d,states s,corruption_story cs where d.department_id=cs.department_id and s.state_id=cs.state_id and s.state_name="AP" order by cs.corruption_date desc;
++-----------------+-----------------+-------------+----------+------------+
+| corruption_date | department_name | bribe_taker | bribe_rs | experience |
++-----------------+-----------------+-------------+----------+------------+
+| 2011-12-07      | RTO             | police      |     1000 | bad        |
++-----------------+-----------------+-------------+----------+------------+
+1 row in set (0.00 sec)
+
+mysql> select cs.corruption_date,d.department_name,cs.bribe_taker,cs.bribe_rs,cs.experience from departments d,states s,corruption_story cs where d.department_id=cs.department_id and s.state_id=cs.state_id and s.state_name="AP" order by cs.corruption_date desc;
++-----------------+-----------------+-------------+----------+------------+
+| corruption_date | department_name | bribe_taker | bribe_rs | experience |
++-----------------+-----------------+-------------+----------+------------+
+| 2011-12-07      | RTO             | police      |     1000 | bad        |
++-----------------+-----------------+-------------+----------+------------+
+1 row in set (0.00 sec)
+
+mysql> select cs.corruption_date,d.department_name,cs.bribe_taker,cs.bribe_rs,cs.experience from departments d,states s,corruption_story cs where d.department_id=cs.department_id and s.state_id=cs.state_id and s.state_id="2" order by cs.corruption_date desc;
++-----------------+-----------------+-------------+----------+------------+
+| corruption_date | department_name | bribe_taker | bribe_rs | experience |
++-----------------+-----------------+-------------+----------+------------+
+| 2011-12-07      | RTO             | police      |     1000 | bad        |
++-----------------+-----------------+-------------+----------+------------+
+1 row in set (0.00 sec)
+
