@@ -1,0 +1,85 @@
+/**********************************/
+/* Table Name: departments */
+/**********************************/
+CREATE TABLE departments(
+		department_id                 		INT(10)		 NOT NULL AUTO_INCREMENT,
+		department_name               		VARCHAR(30)		 NOT NULL
+);
+/**********************************/
+/* Table Name: corruption_story */
+/**********************************/
+CREATE TABLE corruption_story(
+		corruption_id                 		INT(10)		 NOT NULL AUTO_INCREMENT,
+		country                       		VARCHAR(30)		 NULL ,
+		state_id                      		INT(10)		 NULL ,
+		city                          		VARCHAR(30)		 NULL ,
+		age                           		INT(10)		 NULL ,
+		department_id                 		INT(10)		 NULL ,
+		bribe_taker                   		VARCHAR(30)		 NULL ,
+		bribe_rs                      		DOUBLE(22)		 NULL ,
+		experience                    		VARCHAR(100)		 NULL ,
+		corruption_date               		DATE		 NULL 
+);
+/**********************************/
+/* Table Name: states */
+/**********************************/
+CREATE TABLE states(
+		state_id                      		INT(10)		 NOT NULL AUTO_INCREMENT,
+		state_name                    		VARCHAR(30)		 NOT NULL
+);
+
+ALTER TABLE departments ADD CONSTRAINT IDX_departments_PK PRIMARY KEY (department_id);
+
+ALTER TABLE corruption_story ADD CONSTRAINT IDX_corruption_story_PK PRIMARY KEY (corruption_id);
+ALTER TABLE corruption_story ADD CONSTRAINT IDX_corruption_story_FK0 FOREIGN KEY (state_id) REFERENCES states (state_id);
+ALTER TABLE corruption_story ADD CONSTRAINT IDX_corruption_story_FK1 FOREIGN KEY (department_id) REFERENCES departments (department_id);
+CREATE INDEX state_id ON corruption_story (state_id);
+CREATE INDEX department_id ON corruption_story (department_id);
+
+ALTER TABLE states ADD CONSTRAINT IDX_states_PK PRIMARY KEY (state_id);
+
+
+mysql> insert into states values(1,"karnataka");
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into states values(2,"AP");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into states values(3,"MP");
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into states values(4,"HP");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from states;
++----------+------------+
+| state_id | state_name |
++----------+------------+
+|        1 | karnataka  |
+|        2 | AP         |
+|        3 | MP         |
+|        4 | HP         |
++----------+------------+
+4 rows in set (0.00 sec)
+
+mysql> insert into departments values(1,"Legal");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into departments values(2,"Traffic");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into departments values(3,"Jail");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into departments values(4,"RTO");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from departments;
++---------------+-----------------+
+| department_id | department_name |
++---------------+-----------------+
+|             1 | Legal           |
+|             2 | Traffic         |
+|             3 | Jail            |
+|             4 | RTO             |
++---------------+-----------------+
